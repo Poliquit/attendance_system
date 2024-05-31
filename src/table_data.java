@@ -161,10 +161,10 @@ public class table_data extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_insertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_insertActionPerformed
-        String name = txt_name.getText();
+        String name = txt_name.getText().toUpperCase();
         String student_no = txt_studentnumber.getText();
-        String course_yr = txt_courseyear.getText();
-        String semester = txt_semester.getText();
+        String course_yr = txt_courseyear.getText().toUpperCase();
+        String semester = txt_semester.getText().toUpperCase();
         String date = txt_date.getText();
         String time = txt_time.getText();
         
@@ -181,6 +181,13 @@ public class table_data extends javax.swing.JFrame {
             int k = pst.executeUpdate();
             if (k > 0){
                 JOptionPane.showMessageDialog(this, "1 Student inserted Successfully","System",1);
+                pst.setString(1, name);
+                pst.setString(2, student_no);
+                pst.setString(3, course_yr);
+                pst.setString(4, semester);
+                pst.setString(5, date);
+                pst.setString(6, time);
+                
                 txt_name.setText("");
                 txt_studentnumber.setText("");
                 txt_courseyear.setText("");
@@ -260,7 +267,7 @@ public class table_data extends javax.swing.JFrame {
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         String name = txt_search.getText();
-        String sql = "SELECT * FROM `data_table` WHERE INSTR(student_number, '"+name+"')>0";
+        String sql = "SELECT `student_name`, `student_number`, `course_yr`, `semester`, `date`, `time` FROM `data_table` WHERE INSTR(student_number, '"+name+"')>0";
         
         try {
             pst = conn.prepareStatement(sql);
